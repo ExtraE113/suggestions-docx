@@ -12,6 +12,7 @@ from ..enum.style import WD_STYLE_TYPE
 from .parfmt import ParagraphFormat
 from .run import Run
 from ..shared import Parented
+from ..oxml import OxmlElement
 
 from datetime import datetime
 import re
@@ -23,6 +24,24 @@ class Paragraph(Parented):
     def __init__(self, p, parent):
         super(Paragraph, self).__init__(parent)
         self._p = self._element = p
+
+    def add_suggestion(self, text):
+        suggestion = OxmlElement('w:ins')
+        run = OxmlElement('w:r')
+        run.text = text
+        suggestion.append(run)
+        self._p.append(suggestion)
+
+        return suggestion
+
+    def add_deleted_text(self, text):
+        suggestion = OxmlElement('w:del')
+        run = OxmlElement('w:r')
+        delText = OxmlElement('w:delText')
+        delText.text = text
+        run.append(delText)
+        suggestion.append(run)
+        self._p.append(suggestion)
 
     def add_run(self, text=None, style=None):
         """

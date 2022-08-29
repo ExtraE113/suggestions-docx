@@ -29,6 +29,9 @@ class Run(Parented):
         super(Run, self).__init__(parent)
         self._r = self._element = self.element = r
 
+    # def replace_text_with_suggestion(self):
+    #
+
     def add_break(self, break_type=WD_BREAK.LINE):
         """
         Add a break element of *break_type* to this run. *break_type* can
